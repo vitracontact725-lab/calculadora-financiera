@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <!-- "viewport" hace que la página se vea bien en teléfonos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ========== SEO ========== -->
+  <title>Calculadora de Interés Compuesto Online | Calculadora Financiera</title>
+  <meta name="description" content="Calculadora de interés compuesto online y gratis. Simulá cuánto podría crecer tu dinero con aportes mensuales o anuales, en pesos, dólares o euros, con gráfico y tabla año por año.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0b2545">
+
+  <!--
+    CANONICAL: cuando tengas tu dominio, descomentá esta línea y reemplazá la URL.
+    <link rel="canonical" href="https://www.tudominio.com/">
+  -->
+
+  <!-- Vista previa al compartir en redes sociales (Open Graph) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="Calculadora Financiera">
+  <meta property="og:title" content="Calculadora de Interés Compuesto Online | Calculadora Financiera">
+  <meta property="og:description" content="Simulá cuánto podría crecer tu dinero con aportes periódicos y el interés compuesto. Resultado con gráfico y tabla año por año.">
+  <!-- <meta property="og:url" content="https://www.tudominio.com/"> -->
+
+  <!-- Ícono de la pestaña (SVG incluido en el mismo archivo, no hace falta ninguna imagen) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b2545'/%3E%3Cpath d='M12 48 L26 34 L36 40 L52 18' fill='none' stroke='%2334c38a' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Datos estructurados: ayudan a Google a entender qué es esta página -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Interés Compuesto",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Cualquiera (navegador web)",
+    "inLanguage": "es",
+    "description": "Simulador de interés compuesto con aportes periódicos, gráfico de evolución y tabla anual.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Enlace para quienes navegan con teclado: salta directo a la calculadora -->
+  <a class="skip-link" href="#calculadora">Ir a la calculadora</a>
+
+  <!-- ========== ENCABEZADO ========== -->
+  <header class="site-header">
+    <div class="container">
+      <!-- Nombre del sitio: para cambiarlo, editá este texto (y el <title> de arriba) -->
+      <p class="site-name">Calculadora Financiera</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Título principal (H1) -->
+      <section class="hero" aria-labelledby="titulo-principal">
+        <h1 id="titulo-principal">Calculadora de Interés Compuesto</h1>
+        <p class="subtitle">Calculá cuánto podría crecer tu dinero con aportes periódicos y el interés compuesto.</p>
+        <p class="notice">Es una simulación matemática con datos hipotéticos. No garantiza ningún rendimiento.</p>
+      </section>
+
+      <!-- ========== ESPACIO PUBLICITARIO SUPERIOR ==========
+           Cuando actives AdSense, pegá el código del anuncio DENTRO de este div.
+           Mientras esté vacío, no se muestra ni ocupa lugar. -->
+      <div class="ad-slot" id="AD_SLOT_TOP" data-ad-position="top"></div>
+
+      <!-- ========== CALCULADORA ========== -->
+      <section id="calculadora" class="card" aria-labelledby="titulo-calculadora">
+        <div class="card-head">
+          <h2 id="titulo-calculadora">Tu simulación</h2>
+
+          <!-- Selector de moneda: solo cambia el símbolo, no convierte montos -->
+          <div class="currency-picker">
+            <label for="currency">Moneda</label>
+            <select id="currency" name="currency" aria-describedby="currency-hint">
+              <option value="ARS" selected>ARS ($)</option>
+              <option value="USD">USD (US$)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
+          </div>
+        </div>
+        <p class="hint" id="currency-hint">La moneda solo cambia el símbolo. No se hace ninguna conversión.</p>
+
+        <form id="calc-form" class="form" novalidate autocomplete="off">
+          <p class="form-note">Completá todos los campos. Si no tenés capital inicial o no vas a hacer aportes, escribí 0.</p>
+
+          <!-- Capital inicial -->
+          <div class="field">
+            <label for="initial">Capital inicial</label>
+            <div class="input-group">
+              <span class="affix affix--prefix" data-currency-symbol aria-hidden="true">$</span>
+              <input id="initial" name="initial" type="text" inputmode="decimal"
+                     placeholder="100.000" autocapitalize="off" spellcheck="false"
+                     aria-describedby="initial-hint initial-error" required>
+            </div>
+            <p class="hint" id="initial-hint">Dinero con el que empezás hoy.</p>
+            <p class="error" id="initial-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Aporte periódico -->
+          <div class="field">
+            <label for="contribution">Aporte periódico</label>
+            <div class="input-group">
+              <span class="affix affix--prefix" data-currency-symbol aria-hidden="true">$</span>
+              <input id="contribution" name="contribution" type="text" inputmode="decimal"
+                     placeholder="50.000" autocapitalize="off" spellcheck="false"
+                     aria-describedby="contribution-hint contribution-error" required>
+            </div>
+            <p class="hint" id="contribution-hint">Lo que sumás en cada mes o cada año.</p>
+            <p class="error" id="contribution-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Frecuencia del aporte (botones tipo interruptor, fáciles de tocar) -->
+          <fieldset class="field field--full segmented" aria-describedby="freq-hint">
+            <legend>Frecuencia del aporte</legend>
+            <div class="segmented-options">
+              <input type="radio" id="freq-monthly" name="contribFreq" value="12" checked>
+              <label for="freq-monthly">Mensual</label>
+              <input type="radio" id="freq-yearly" name="contribFreq" value="1">
+              <label for="freq-yearly">Anual</label>
+            </div>
+            <p class="hint" id="freq-hint">El aporte se suma al final de cada mes o de cada año.</p>
+          </fieldset>
+
+          <!-- Tasa de rendimiento anual -->
+          <div class="field">
+            <label for="rate">Tasa de rendimiento anual</label>
+            <div class="input-group">
+              <input id="rate" name="rate" type="text" inputmode="decimal"
+                     placeholder="8" autocapitalize="off" spellcheck="false"
+                     aria-describedby="rate-hint rate-error" required>
+              <span class="affix affix--suffix" aria-hidden="true">%</span>
+            </div>
+            <p class="hint" id="rate-hint">Rendimiento anual estimado.</p>
+            <p class="error" id="rate-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Período de inversión -->
+          <div class="field">
+            <label for="years">Período de inversión</label>
+            <div class="input-group">
+              <input id="years" name="years" type="text" inputmode="decimal"
+                     placeholder="10" autocapitalize="off" spellcheck="false"
+                     aria-describedby="years-hint years-error" required>
+              <span class="affix affix--suffix" aria-hidden="true">años</span>
+            </div>
+            <p class="hint" id="years-hint">Podés usar decimales, por ejemplo 2,5.</p>
+            <p class="error" id="years-error" aria-live="polite"></p>
+          </div>
+
+          <!-- Frecuencia de capitalización -->
+          <div class="field field--full">
+            <label for="compounding">Frecuencia de capitalización</label>
+            <select id="compounding" name="compounding" aria-describedby="compounding-hint">
+              <option value="1">Anual</option>
+              <option value="2">Semestral</option>
+              <option value="4">Trimestral</option>
+              <option value="12" selected>Mensual</option>
+            </select>
+            <p class="hint" id="compounding-hint">Cada cuánto los intereses se suman al capital para generar nuevos intereses.</p>
+          </div>
+
+          <!-- Error general (por ejemplo, si el resultado es demasiado grande) -->
+          <p class="error error--form" id="form-error" aria-live="polite"></p>
+
+          <div class="actions">
+            <button type="submit" class="btn btn--primary" id="btn-calculate">Calcular</button>
+            <button type="button" class="btn btn--secondary" id="btn-clear">Limpiar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ========== RESULTADOS (se muestran al presionar "Calcular") ========== -->
+      <section id="results" class="results" aria-labelledby="results-title" hidden>
+
+        <div class="card">
+          <h2 id="results-title" tabindex="-1">Resultado estimado</h2>
+          <p class="results-summary" id="results-summary"></p>
+
+          <!-- Número principal -->
+          <div class="result-hero">
+            <p class="result-label">Capital final estimado</p>
+            <p class="result-value" id="res-final">—</p>
+          </div>
+
+          <!-- Tarjetas separadas -->
+          <div class="result-grid">
+            <div class="stat">
+              <p class="stat-label">Dinero aportado</p>
+              <p class="stat-value" id="res-contributed">—</p>
+              <p class="stat-note">Incluye el capital inicial.</p>
+            </div>
+            <div class="stat stat--positive">
+              <p class="stat-label">Intereses generados</p>
+              <p class="stat-value" id="res-interest">—</p>
+              <p class="stat-note">Ganancia hipotética.</p>
+            </div>
+            <div class="stat">
+              <p class="stat-label">Rendimiento sobre el capital aportado</p>
+              <p class="stat-value" id="res-return">—</p>
+              <p class="stat-note">Intereses ÷ dinero aportado.</p>
+            </div>
+          </div>
+
+          <p class="disclaimer">Resultado hipotético. Los rendimientos reales pueden ser distintos, incluso negativos, y no incluyen impuestos, comisiones ni inflación.</p>
+        </div>
+
+        <!-- Gráfico -->
+        <div class="card">
+          <h3>Evolución del capital</h3>
+          <ul class="legend" aria-label="Referencias del gráfico">
+            <li><span class="swatch swatch--contrib" aria-hidden="true"></span>Dinero aportado</li>
+            <li><span class="swatch swatch--interest" aria-hidden="true"></span>Intereses generados</li>
+          </ul>
+          <!-- El gráfico SVG se dibuja acá desde script.js -->
+          <div class="chart-wrap" id="chart-wrap">
+            <div id="chart"></div>
+            <div class="chart-tooltip" id="chart-tooltip" hidden></div>
+          </div>
+          <p class="hint">Tocá o pasá el cursor sobre el gráfico para ver los valores de cada momento.</p>
+        </div>
+
+        <!-- Tabla anual -->
+        <div class="card">
+          <h3>Detalle año por año</h3>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de evolución anual (desplazable)">
+            <table class="year-table">
+              <caption class="sr-only">Aportes acumulados, intereses acumulados y capital total al final de cada año</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Año</th>
+                  <th scope="col">Aportes acumulados</th>
+                  <th scope="col">Intereses acumulados</th>
+                  <th scope="col">Capital total</th>
+                </tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ESPACIO PUBLICITARIO INTERMEDIO ==========
+           Está debajo de la calculadora y los resultados, así no interfiere con el uso. -->
+      <div class="ad-slot" id="AD_SLOT_MIDDLE" data-ad-position="middle"></div>
+
+      <!-- ========== CONTENIDO EDUCATIVO ========== -->
+      <section class="content" aria-labelledby="que-es">
+        <h2 id="que-es">¿Qué es el interés compuesto?</h2>
+        <p>El interés compuesto ocurre cuando los rendimientos que obtenés se incorporan al capital y, a partir de ese momento, también generan rendimientos. Es decir, ganás intereses sobre tu dinero y además sobre los intereses anteriores.</p>
+        <p>Un ejemplo simple: con $1.000 y un rendimiento de 10 % anual, al final del primer año tendrías $1.100. En el segundo año el 10 % se calcula sobre $1.100 y no sobre $1.000, así que llegarías a $1.210. Al tercer año serían $1.331. Cuanto más tiempo pasa, más pesa este efecto.</p>
+      </section>
+
+      <section class="content" aria-labelledby="como-funciona">
+        <h2 id="como-funciona">¿Cómo funciona esta calculadora?</h2>
+        <ol class="steps">
+          <li>Introducís tu capital inicial.</li>
+          <li>Indicás cuánto aportarás periódicamente, cada mes o cada año.</li>
+          <li>Indicás una tasa de rendimiento anual estimada.</li>
+          <li>Elegís durante cuánto tiempo invertirás.</li>
+          <li>La calculadora estima la evolución del capital, separando lo aportado de los intereses.</li>
+        </ol>
+        <p><strong>Importante:</strong> los resultados son hipotéticos. Suponen una tasa constante durante todo el período y los rendimientos reales pueden ser diferentes.</p>
+
+        <h3>Supuestos del cálculo</h3>
+        <ul class="bullets">
+          <li>La tasa que ingresás es una tasa nominal anual, que se capitaliza con la frecuencia que elijas (anual, semestral, trimestral o mensual).</li>
+          <li>Los aportes se suman al final de cada mes o de cada año, según lo que elijas.</li>
+          <li>La tasa se mantiene constante durante todo el período.</li>
+          <li>No se descuentan impuestos, comisiones ni inflación.</li>
+        </ul>
+      </section>
+
+      <section class="content" aria-labelledby="ejemplo">
+        <h2 id="ejemplo">Ejemplo de simulación</h2>
+        <p>Este es solamente un ejemplo educativo, con números inventados para mostrar cómo se lee el resultado:</p>
+        <div class="example">
+          <dl class="example-list">
+            <div><dt>Capital inicial</dt><dd>$100.000</dd></div>
+            <div><dt>Aporte mensual</dt><dd>$50.000</dd></div>
+            <div><dt>Rendimiento anual</dt><dd>8 %</dd></div>
+            <div><dt>Capitalización</dt><dd>Mensual</dd></div>
+            <div><dt>Período</dt><dd>10 años</dd></div>
+          </dl>
+          <dl class="example-list example-list--result">
+            <div><dt>Dinero aportado</dt><dd>$6.100.000</dd></div>
+            <div><dt>Intereses generados</dt><dd>$3.269.266</dd></div>
+            <div><dt>Capital final estimado</dt><dd>$9.369.266</dd></div>
+          </dl>
+        </div>
+        <p class="hint">Simulación hipotética. No es una promesa de rendimiento.</p>
+        <button type="button" class="btn btn--secondary btn--inline" id="btn-example">Probar este ejemplo en la calculadora</button>
+      </section>
+
+      <section class="content" aria-labelledby="faq">
+        <h2 id="faq">Preguntas frecuentes</h2>
+
+        <details>
+          <summary>¿Qué diferencia hay entre la capitalización mensual y la anual?</summary>
+          <p>Con capitalización mensual, los intereses se suman al capital doce veces por año, y por eso empiezan a generar nuevos intereses antes. Con la misma tasa nominal, capitalizar más seguido da un resultado final algo mayor.</p>
+        </details>
+
+        <details>
+          <summary>¿La calculadora tiene en cuenta la inflación?</summary>
+          <p>No. Los montos son nominales. Si querés tener una idea del poder de compra futuro, una aproximación es usar como tasa la diferencia entre el rendimiento anual estimado y la inflación anual esperada.</p>
+        </details>
+
+        <details>
+          <summary>¿Puedo usar dólares o euros?</summary>
+          <p>Sí. Elegí la moneda en el selector de la calculadora. Solo cambia el símbolo que se muestra: los números no se convierten entre monedas.</p>
+        </details>
+
+        <details>
+          <summary>¿Se guardan los datos que ingreso?</summary>
+          <p>No. Todo el cálculo se hace en tu navegador. Los datos no se envían a ningún servidor ni se te pide información personal.</p>
+        </details>
+      </section>
+
+      <!-- ========== ESPACIO PUBLICITARIO INFERIOR ========== -->
+      <div class="ad-slot" id="AD_SLOT_BOTTOM" data-ad-position="bottom"></div>
+
+    </div>
+  </main>
+
+  <!-- ========== PIE DE PÁGINA ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Calculadora Financiera</strong> &copy; <span id="year">2026</span></p>
+      <p>Esta herramienta es informativa y educativa. No constituye asesoramiento financiero, ni una recomendación de inversión, ni una garantía de rentabilidad. Los cálculos se realizan localmente en tu navegador.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
